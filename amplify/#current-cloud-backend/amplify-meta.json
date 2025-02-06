@@ -1,15 +1,250 @@
 {
   "providers": {
     "awscloudformation": {
-      "AuthRoleName": "amplify-restaurantapi-dev-6218f-authRole",
-      "UnauthRoleArn": "arn:aws:iam::490004609762:role/amplify-restaurantapi-dev-6218f-unauthRole",
-      "AuthRoleArn": "arn:aws:iam::490004609762:role/amplify-restaurantapi-dev-6218f-authRole",
+      "AuthRoleName": "amplify-bigdata-dev-145159-authRole",
+      "UnauthRoleArn": "arn:aws:iam::490004609762:role/amplify-bigdata-dev-145159-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::490004609762:role/amplify-bigdata-dev-145159-authRole",
       "Region": "eu-west-3",
-      "DeploymentBucketName": "amplify-restaurantapi-dev-6218f-deployment",
-      "UnauthRoleName": "amplify-restaurantapi-dev-6218f-unauthRole",
-      "StackName": "amplify-restaurantapi-dev-6218f",
-      "StackId": "arn:aws:cloudformation:eu-west-3:490004609762:stack/amplify-restaurantapi-dev-6218f/5d7adf30-e21c-11ef-a882-06109d08dac9",
-      "AmplifyAppId": "d1lnvp82dhd8ek"
+      "DeploymentBucketName": "amplify-bigdata-dev-145159-deployment",
+      "UnauthRoleName": "amplify-bigdata-dev-145159-unauthRole",
+      "StackName": "amplify-bigdata-dev-145159",
+      "StackId": "arn:aws:cloudformation:eu-west-3:490004609762:stack/amplify-bigdata-dev-145159/0add95a0-e236-11ef-842f-0e53a9d05af7",
+      "AmplifyAppId": "d2tflb5deqp29u"
     }
-  }
+  },
+  "api": {
+    "restaurantapi": {
+      "service": "AppSync",
+      "providerPlugin": "awscloudformation",
+      "dependsOn": [],
+      "output": {
+        "authConfig": {
+          "defaultAuthentication": {
+            "authenticationType": "API_KEY",
+            "apiKeyConfig": {
+              "apiKeyExpirationDays": 365,
+              "apiKeyExpirationDate": "2026-02-03T22:10:24.924Z",
+              "description": ""
+            }
+          },
+          "additionalAuthenticationProviders": []
+        },
+        "GraphQLAPIIdOutput": "pr6ldw4tmzejjoqjxwtlfg2iem",
+        "GraphQLAPIEndpointOutput": "https://r7aacxomyvaqtdx6jxzgi6be2e.appsync-api.eu-west-3.amazonaws.com/graphql",
+        "GraphQLAPIKeyOutput": "da2-7ykif2bor5cz3dgip5hrwgsmke"
+      },
+      "providerMetadata": {
+        "s3TemplateURL": "https://s3.amazonaws.com/amplify-bigdata-dev-145159-deployment/amplify-cfn-templates/api/cloudformation-template.json",
+        "logicalId": "apirestaurantapi"
+      },
+      "lastPushTimeStamp": "2025-02-06T09:20:55.731Z",
+      "lastPushDirHash": "V8u4hpqX/JY1JAiCM5EO2k/goLM="
+    },
+    "restaurantRestApi": {
+      "service": "API Gateway",
+      "providerPlugin": "awscloudformation",
+      "dependsOn": [
+        {
+          "category": "function",
+          "resourceName": "restaurantsFunction",
+          "attributes": [
+            "Name",
+            "Arn"
+          ]
+        },
+        {
+          "category": "function",
+          "resourceName": "restaurantFunction",
+          "attributes": [
+            "Name",
+            "Arn"
+          ]
+        },
+        {
+          "category": "function",
+          "resourceName": "reviewsFunction",
+          "attributes": [
+            "Name",
+            "Arn"
+          ]
+        }
+      ],
+      "providerMetadata": {
+        "s3TemplateURL": "https://s3.amazonaws.com/amplify-bigdata-dev-145159-deployment/amplify-cfn-templates/api/restaurantRestApi-cloudformation-template.json",
+        "logicalId": "apirestaurantRestApi"
+      },
+      "lastPushTimeStamp": "2025-02-06T09:20:55.737Z",
+      "output": {
+        "ApiName": "restaurantRestApi",
+        "RootUrl": "https://cqsxbesjv1.execute-api.eu-west-3.amazonaws.com/dev",
+        "ApiId": "cqsxbesjv1"
+      },
+      "lastPushDirHash": "V6y5qCglJQfzzeIKVIi0er/htbw="
+    }
+  },
+  "function": {
+    "scrapingYelp": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda",
+      "dependsOn": [
+        {
+          "category": "api",
+          "resourceName": "restaurantapi",
+          "attributes": [
+            "GraphQLAPIIdOutput",
+            "GraphQLAPIEndpointOutput",
+            "GraphQLAPIKeyOutput"
+          ]
+        }
+      ],
+      "lastBuildTimeStamp": "2025-02-06T09:16:29.432Z",
+      "lastBuildType": "PROD",
+      "lastPackageTimeStamp": "2025-02-06T09:18:29.766Z",
+      "distZipFilename": "scrapingYelp-472b5a4b77564a386975-build.zip",
+      "s3Bucket": {
+        "deploymentBucketName": "amplify-bigdata-dev-145159-deployment",
+        "s3Key": "amplify-builds/scrapingYelp-472b5a4b77564a386975-build.zip"
+      },
+      "providerMetadata": {
+        "s3TemplateURL": "https://s3.amazonaws.com/amplify-bigdata-dev-145159-deployment/amplify-cfn-templates/function/scrapingYelp-cloudformation-template.json",
+        "logicalId": "functionscrapingYelp"
+      },
+      "lastPushTimeStamp": "2025-02-06T09:20:56.072Z",
+      "output": {
+        "LambdaExecutionRoleArn": "arn:aws:iam::490004609762:role/bigdataLambdaRole4e10f0b2-dev",
+        "Region": "eu-west-3",
+        "CloudWatchEventRule": "amplify-bigdata-dev-145159-function-CloudWatchEvent-gRwHrG3KCj3C",
+        "Arn": "arn:aws:lambda:eu-west-3:490004609762:function:scrapingYelp-dev",
+        "Name": "scrapingYelp-dev",
+        "LambdaExecutionRole": "bigdataLambdaRole4e10f0b2-dev"
+      },
+      "lastPushDirHash": "G+ZKwVJ8iup4cNijumQh1nAjiYQ=",
+      "lastDevBuildTimeStamp": "2025-02-05T10:03:30.935Z"
+    },
+    "analyzeReviews": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda",
+      "dependsOn": [
+        {
+          "category": "api",
+          "resourceName": "restaurantapi",
+          "attributes": [
+            "GraphQLAPIIdOutput",
+            "GraphQLAPIEndpointOutput",
+            "GraphQLAPIKeyOutput"
+          ]
+        },
+        {
+          "category": "function",
+          "resourceName": "scrapingYelp",
+          "attributes": [
+            "Name"
+          ]
+        }
+      ],
+      "lastDevBuildTimeStamp": "2025-02-05T13:52:31.840Z",
+      "lastBuildType": "PROD",
+      "lastBuildTimeStamp": "2025-02-06T09:16:29.342Z",
+      "lastPackageTimeStamp": "2025-02-06T09:18:39.533Z",
+      "distZipFilename": "analyzeReviews-36687a576d63306d2f79-build.zip",
+      "s3Bucket": {
+        "deploymentBucketName": "amplify-bigdata-dev-145159-deployment",
+        "s3Key": "amplify-builds/analyzeReviews-36687a576d63306d2f79-build.zip"
+      },
+      "providerMetadata": {
+        "s3TemplateURL": "https://s3.amazonaws.com/amplify-bigdata-dev-145159-deployment/amplify-cfn-templates/function/analyzeReviews-cloudformation-template.json",
+        "logicalId": "functionanalyzeReviews"
+      },
+      "lastPushTimeStamp": "2025-02-06T09:20:56.072Z",
+      "output": {
+        "LambdaExecutionRoleArn": "arn:aws:iam::490004609762:role/bigdataLambdaRole704f510e-dev",
+        "Region": "eu-west-3",
+        "Arn": "arn:aws:lambda:eu-west-3:490004609762:function:analyzeReviews-dev",
+        "Name": "analyzeReviews-dev",
+        "LambdaExecutionRole": "bigdataLambdaRole704f510e-dev"
+      },
+      "lastPushDirHash": "6hzWmc0m/y7zQB0xKiaPez1DxNA="
+    },
+    "restaurantsFunction": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda",
+      "lastBuildTimeStamp": "2025-02-06T09:16:37.390Z",
+      "lastBuildType": "PROD",
+      "lastPackageTimeStamp": "2025-02-06T09:17:04.469Z",
+      "distZipFilename": "restaurantsFunction-6e6a46797145664a4653-build.zip",
+      "s3Bucket": {
+        "deploymentBucketName": "amplify-bigdata-dev-145159-deployment",
+        "s3Key": "amplify-builds/restaurantsFunction-6e6a46797145664a4653-build.zip"
+      },
+      "providerMetadata": {
+        "s3TemplateURL": "https://s3.amazonaws.com/amplify-bigdata-dev-145159-deployment/amplify-cfn-templates/function/restaurantsFunction-cloudformation-template.json",
+        "logicalId": "functionrestaurantsFunction"
+      },
+      "lastPushTimeStamp": "2025-02-06T09:20:56.072Z",
+      "output": {
+        "LambdaExecutionRoleArn": "arn:aws:iam::490004609762:role/bigdataLambdaRole6b90f80f-dev",
+        "Region": "eu-west-3",
+        "Arn": "arn:aws:lambda:eu-west-3:490004609762:function:restaurantsFunction-dev",
+        "Name": "restaurantsFunction-dev",
+        "LambdaExecutionRole": "bigdataLambdaRole6b90f80f-dev"
+      },
+      "lastPushDirHash": "njFyqEfJFS3WJxDzV7foj/L6d9g="
+    },
+    "restaurantFunction": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda",
+      "lastBuildTimeStamp": "2025-02-06T09:16:37.460Z",
+      "lastBuildType": "PROD",
+      "lastPackageTimeStamp": "2025-02-06T09:17:04.561Z",
+      "distZipFilename": "restaurantFunction-6173657a3138657a634c-build.zip",
+      "s3Bucket": {
+        "deploymentBucketName": "amplify-bigdata-dev-145159-deployment",
+        "s3Key": "amplify-builds/restaurantFunction-6173657a3138657a634c-build.zip"
+      },
+      "providerMetadata": {
+        "s3TemplateURL": "https://s3.amazonaws.com/amplify-bigdata-dev-145159-deployment/amplify-cfn-templates/function/restaurantFunction-cloudformation-template.json",
+        "logicalId": "functionrestaurantFunction"
+      },
+      "lastPushTimeStamp": "2025-02-06T09:20:56.072Z",
+      "output": {
+        "LambdaExecutionRoleArn": "arn:aws:iam::490004609762:role/bigdataLambdaRole2a16e282-dev",
+        "Region": "eu-west-3",
+        "Arn": "arn:aws:lambda:eu-west-3:490004609762:function:restaurantFunction-dev",
+        "Name": "restaurantFunction-dev",
+        "LambdaExecutionRole": "bigdataLambdaRole2a16e282-dev"
+      },
+      "lastPushDirHash": "asez18ezcLFePLxClaR1M3Pbck0="
+    },
+    "reviewsFunction": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda",
+      "lastBuildTimeStamp": "2025-02-06T09:16:37.414Z",
+      "lastBuildType": "PROD",
+      "lastPackageTimeStamp": "2025-02-06T09:17:04.512Z",
+      "distZipFilename": "reviewsFunction-4e34716273656a367a76-build.zip",
+      "s3Bucket": {
+        "deploymentBucketName": "amplify-bigdata-dev-145159-deployment",
+        "s3Key": "amplify-builds/reviewsFunction-4e34716273656a367a76-build.zip"
+      },
+      "providerMetadata": {
+        "s3TemplateURL": "https://s3.amazonaws.com/amplify-bigdata-dev-145159-deployment/amplify-cfn-templates/function/reviewsFunction-cloudformation-template.json",
+        "logicalId": "functionreviewsFunction"
+      },
+      "lastPushTimeStamp": "2025-02-06T09:20:56.072Z",
+      "output": {
+        "LambdaExecutionRoleArn": "arn:aws:iam::490004609762:role/bigdataLambdaRolee30c8bf8-dev",
+        "Region": "eu-west-3",
+        "Arn": "arn:aws:lambda:eu-west-3:490004609762:function:reviewsFunction-dev",
+        "Name": "reviewsFunction-dev",
+        "LambdaExecutionRole": "bigdataLambdaRolee30c8bf8-dev"
+      },
+      "lastPushDirHash": "N4qbsej6zv9EtDI6wSb1C/fWWrQ="
+    }
+  },
+  "auth": {}
 }

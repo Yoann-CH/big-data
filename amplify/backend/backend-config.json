@@ -1,1 +1,190 @@
-{}
+{
+  "api": {
+    "restaurantRestApi": {
+      "dependsOn": [
+        {
+          "attributes": [
+            "Name",
+            "Arn"
+          ],
+          "category": "function",
+          "resourceName": "restaurantsFunction"
+        },
+        {
+          "attributes": [
+            "Name",
+            "Arn"
+          ],
+          "category": "function",
+          "resourceName": "restaurantFunction"
+        },
+        {
+          "attributes": [
+            "Name",
+            "Arn"
+          ],
+          "category": "function",
+          "resourceName": "reviewsFunction"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "API Gateway"
+    },
+    "restaurantapi": {
+      "dependsOn": [],
+      "output": {
+        "authConfig": {
+          "additionalAuthenticationProviders": [],
+          "defaultAuthentication": {
+            "apiKeyConfig": {
+              "apiKeyExpirationDate": "2026-02-03T22:10:24.924Z",
+              "apiKeyExpirationDays": 365,
+              "description": ""
+            },
+            "authenticationType": "API_KEY"
+          }
+        }
+      },
+      "providerPlugin": "awscloudformation",
+      "service": "AppSync"
+    }
+  },
+  "function": {
+    "analyzeReviews": {
+      "build": true,
+      "dependsOn": [
+        {
+          "attributes": [
+            "GraphQLAPIIdOutput",
+            "GraphQLAPIEndpointOutput",
+            "GraphQLAPIKeyOutput"
+          ],
+          "category": "api",
+          "resourceName": "restaurantapi"
+        },
+        {
+          "attributes": [
+            "Name"
+          ],
+          "category": "function",
+          "resourceName": "scrapingYelp"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    },
+    "restaurantFunction": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    },
+    "restaurantsFunction": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    },
+    "reviewsFunction": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    },
+    "scrapingYelp": {
+      "build": true,
+      "dependsOn": [
+        {
+          "attributes": [
+            "GraphQLAPIIdOutput",
+            "GraphQLAPIEndpointOutput",
+            "GraphQLAPIKeyOutput"
+          ],
+          "category": "api",
+          "resourceName": "restaurantapi"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    }
+  },
+  "parameters": {
+    "AMPLIFY_function_analyzeReviews_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "analyzeReviews"
+        }
+      ]
+    },
+    "AMPLIFY_function_analyzeReviews_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "analyzeReviews"
+        }
+      ]
+    },
+    "AMPLIFY_function_restaurantFunction_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "restaurantFunction"
+        }
+      ]
+    },
+    "AMPLIFY_function_restaurantFunction_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "restaurantFunction"
+        }
+      ]
+    },
+    "AMPLIFY_function_restaurantsFunction_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "restaurantsFunction"
+        }
+      ]
+    },
+    "AMPLIFY_function_restaurantsFunction_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "restaurantsFunction"
+        }
+      ]
+    },
+    "AMPLIFY_function_reviewsFunction_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "reviewsFunction"
+        }
+      ]
+    },
+    "AMPLIFY_function_reviewsFunction_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "reviewsFunction"
+        }
+      ]
+    },
+    "AMPLIFY_function_scrapingYelp_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "scrapingYelp"
+        }
+      ]
+    },
+    "AMPLIFY_function_scrapingYelp_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "scrapingYelp"
+        }
+      ]
+    }
+  }
+}

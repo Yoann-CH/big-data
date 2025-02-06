@@ -1,0 +1,5 @@
+{
+  "AppSyncApiName": "restaurantapi",
+  "DynamoDBBillingMode": "PAY_PER_REQUEST",
+  "DynamoDBEnableServerSideEncryption": false
+}

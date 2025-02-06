@@ -1,0 +1,6 @@
+{
+  "operation": "restaurants_and_reviews",
+  "location": "Paris",
+  "max_restaurants": 10,
+  "max_reviews_per_restaurant": 10
+}

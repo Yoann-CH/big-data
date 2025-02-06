@@ -1,15 +1,43 @@
 {
   "dev": {
     "awscloudformation": {
-      "AuthRoleName": "amplify-restaurantapi-dev-6218f-authRole",
-      "UnauthRoleArn": "arn:aws:iam::490004609762:role/amplify-restaurantapi-dev-6218f-unauthRole",
-      "AuthRoleArn": "arn:aws:iam::490004609762:role/amplify-restaurantapi-dev-6218f-authRole",
+      "AuthRoleName": "amplify-bigdata-dev-145159-authRole",
+      "UnauthRoleArn": "arn:aws:iam::490004609762:role/amplify-bigdata-dev-145159-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::490004609762:role/amplify-bigdata-dev-145159-authRole",
       "Region": "eu-west-3",
-      "DeploymentBucketName": "amplify-restaurantapi-dev-6218f-deployment",
-      "UnauthRoleName": "amplify-restaurantapi-dev-6218f-unauthRole",
-      "StackName": "amplify-restaurantapi-dev-6218f",
-      "StackId": "arn:aws:cloudformation:eu-west-3:490004609762:stack/amplify-restaurantapi-dev-6218f/5d7adf30-e21c-11ef-a882-06109d08dac9",
-      "AmplifyAppId": "d1lnvp82dhd8ek"
+      "DeploymentBucketName": "amplify-bigdata-dev-145159-deployment",
+      "UnauthRoleName": "amplify-bigdata-dev-145159-unauthRole",
+      "StackName": "amplify-bigdata-dev-145159",
+      "StackId": "arn:aws:cloudformation:eu-west-3:490004609762:stack/amplify-bigdata-dev-145159/0add95a0-e236-11ef-842f-0e53a9d05af7",
+      "AmplifyAppId": "d2tflb5deqp29u"
+    },
+    "categories": {
+      "api": {
+        "restaurantapi": {},
+        "restaurantRestApi": {}
+      },
+      "function": {
+        "scrapingYelp": {
+          "deploymentBucketName": "amplify-bigdata-dev-145159-deployment",
+          "s3Key": "amplify-builds/scrapingYelp-472b5a4b77564a386975-build.zip"
+        },
+        "analyzeReviews": {
+          "deploymentBucketName": "amplify-bigdata-dev-145159-deployment",
+          "s3Key": "amplify-builds/analyzeReviews-36687a576d63306d2f79-build.zip"
+        },
+        "restaurantsFunction": {
+          "deploymentBucketName": "amplify-bigdata-dev-145159-deployment",
+          "s3Key": "amplify-builds/restaurantsFunction-6e6a46797145664a4653-build.zip"
+        },
+        "restaurantFunction": {
+          "deploymentBucketName": "amplify-bigdata-dev-145159-deployment",
+          "s3Key": "amplify-builds/restaurantFunction-6173657a3138657a634c-build.zip"
+        },
+        "reviewsFunction": {
+          "deploymentBucketName": "amplify-bigdata-dev-145159-deployment",
+          "s3Key": "amplify-builds/reviewsFunction-4e34716273656a367a76-build.zip"
+        }
+      }
     }
   }
 }

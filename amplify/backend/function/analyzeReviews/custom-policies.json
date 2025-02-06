@@ -1,0 +1,22 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": [
+        "dynamodb:GetItem",
+        "dynamodb:Query",
+        "dynamodb:UpdateItem",
+        "s3:GetObject",
+        "s3:PutObject",
+        "s3:DeleteObject"
+      ],
+      "Resource": [
+        "arn:aws:dynamodb:*:*:table/Review-*",
+        "arn:aws:dynamodb:*:*:table/Review-*/index/*",
+        "arn:aws:s3:::restaurant-graphs-dev",
+        "arn:aws:s3:::restaurant-graphs-dev/*"
+      ]
+    }
+  ]
+}

@@ -110,53 +110,6 @@
       "UpdateReplacePolicy": "Retain",
       "DeletionPolicy": "Retain"
     },
-    "DeploymentBucketBlockHTTP": {
-      "Type": "AWS::S3::BucketPolicy",
-      "Properties": {
-        "Bucket": {
-          "Ref": "DeploymentBucketName"
-        },
-        "PolicyDocument": {
-          "Statement": [
-            {
-              "Action": "s3:*",
-              "Effect": "Deny",
-              "Principal": "*",
-              "Resource": [
-                {
-                  "Fn::Join": [
-                    "",
-                    [
-                      "arn:aws:s3:::",
-                      {
-                        "Ref": "DeploymentBucketName"
-                      },
-                      "/*"
-                    ]
-                  ]
-                },
-                {
-                  "Fn::Join": [
-                    "",
-                    [
-                      "arn:aws:s3:::",
-                      {
-                        "Ref": "DeploymentBucketName"
-                      }
-                    ]
-                  ]
-                }
-              ],
-              "Condition": {
-                "Bool": {
-                  "aws:SecureTransport": false
-                }
-              }
-            }
-          ]
-        }
-      }
-    },
     "AuthRole": {
       "Type": "AWS::IAM::Role",
       "Properties": {
@@ -196,6 +149,163 @@
         },
         "RoleName": {
           "Ref": "UnauthRoleName"
+        }
+      }
+    },
+    "apirestaurantapi": {
+      "Type": "AWS::CloudFormation::Stack",
+      "Properties": {
+        "TemplateURL": "https://s3.amazonaws.com/amplify-bigdata-dev-145159-deployment/amplify-cfn-templates/api/cloudformation-template.json",
+        "Parameters": {
+          "AppSyncApiName": "restaurantapi",
+          "DynamoDBBillingMode": "PAY_PER_REQUEST",
+          "DynamoDBEnableServerSideEncryption": false,
+          "S3DeploymentBucket": "amplify-bigdata-dev-145159-deployment",
+          "S3DeploymentRootKey": "amplify-appsync-files/2850deab0b2f7f2aea723c31087f39e1de9dde85",
+          "env": "dev"
+        }
+      }
+    },
+    "apirestaurantRestApi": {
+      "Type": "AWS::CloudFormation::Stack",
+      "Properties": {
+        "TemplateURL": "https://s3.amazonaws.com/amplify-bigdata-dev-145159-deployment/amplify-cfn-templates/api/restaurantRestApi-cloudformation-template.json",
+        "Parameters": {
+          "functionrestaurantsFunctionName": {
+            "Fn::GetAtt": [
+              "functionrestaurantsFunction",
+              "Outputs.Name"
+            ]
+          },
+          "functionrestaurantsFunctionArn": {
+            "Fn::GetAtt": [
+              "functionrestaurantsFunction",
+              "Outputs.Arn"
+            ]
+          },
+          "functionrestaurantFunctionName": {
+            "Fn::GetAtt": [
+              "functionrestaurantFunction",
+              "Outputs.Name"
+            ]
+          },
+          "functionrestaurantFunctionArn": {
+            "Fn::GetAtt": [
+              "functionrestaurantFunction",
+              "Outputs.Arn"
+            ]
+          },
+          "functionreviewsFunctionName": {
+            "Fn::GetAtt": [
+              "functionreviewsFunction",
+              "Outputs.Name"
+            ]
+          },
+          "functionreviewsFunctionArn": {
+            "Fn::GetAtt": [
+              "functionreviewsFunction",
+              "Outputs.Arn"
+            ]
+          },
+          "env": "dev"
+        }
+      }
+    },
+    "functionscrapingYelp": {
+      "Type": "AWS::CloudFormation::Stack",
+      "Properties": {
+        "TemplateURL": "https://s3.amazonaws.com/amplify-bigdata-dev-145159-deployment/amplify-cfn-templates/function/scrapingYelp-cloudformation-template.json",
+        "Parameters": {
+          "CloudWatchRule": "cron(31 15 * * ? *)",
+          "deploymentBucketName": "amplify-bigdata-dev-145159-deployment",
+          "s3Key": "amplify-builds/scrapingYelp-472b5a4b77564a386975-build.zip",
+          "apirestaurantapiGraphQLAPIIdOutput": {
+            "Fn::GetAtt": [
+              "apirestaurantapi",
+              "Outputs.GraphQLAPIIdOutput"
+            ]
+          },
+          "apirestaurantapiGraphQLAPIEndpointOutput": {
+            "Fn::GetAtt": [
+              "apirestaurantapi",
+              "Outputs.GraphQLAPIEndpointOutput"
+            ]
+          },
+          "apirestaurantapiGraphQLAPIKeyOutput": {
+            "Fn::GetAtt": [
+              "apirestaurantapi",
+              "Outputs.GraphQLAPIKeyOutput"
+            ]
+          },
+          "env": "dev"
+        }
+      }
+    },
+    "functionanalyzeReviews": {
+      "Type": "AWS::CloudFormation::Stack",
+      "Properties": {
+        "TemplateURL": "https://s3.amazonaws.com/amplify-bigdata-dev-145159-deployment/amplify-cfn-templates/function/analyzeReviews-cloudformation-template.json",
+        "Parameters": {
+          "deploymentBucketName": "amplify-bigdata-dev-145159-deployment",
+          "s3Key": "amplify-builds/analyzeReviews-36687a576d63306d2f79-build.zip",
+          "apirestaurantapiGraphQLAPIIdOutput": {
+            "Fn::GetAtt": [
+              "apirestaurantapi",
+              "Outputs.GraphQLAPIIdOutput"
+            ]
+          },
+          "apirestaurantapiGraphQLAPIEndpointOutput": {
+            "Fn::GetAtt": [
+              "apirestaurantapi",
+              "Outputs.GraphQLAPIEndpointOutput"
+            ]
+          },
+          "apirestaurantapiGraphQLAPIKeyOutput": {
+            "Fn::GetAtt": [
+              "apirestaurantapi",
+              "Outputs.GraphQLAPIKeyOutput"
+            ]
+          },
+          "functionscrapingYelpName": {
+            "Fn::GetAtt": [
+              "functionscrapingYelp",
+              "Outputs.Name"
+            ]
+          },
+          "env": "dev"
+        }
+      }
+    },
+    "functionrestaurantsFunction": {
+      "Type": "AWS::CloudFormation::Stack",
+      "Properties": {
+        "TemplateURL": "https://s3.amazonaws.com/amplify-bigdata-dev-145159-deployment/amplify-cfn-templates/function/restaurantsFunction-cloudformation-template.json",
+        "Parameters": {
+          "deploymentBucketName": "amplify-bigdata-dev-145159-deployment",
+          "s3Key": "amplify-builds/restaurantsFunction-6e6a46797145664a4653-build.zip",
+          "env": "dev"
+        }
+      }
+    },
+    "functionrestaurantFunction": {
+      "Type": "AWS::CloudFormation::Stack",
+      "Properties": {
+        "TemplateURL": "https://s3.amazonaws.com/amplify-bigdata-dev-145159-deployment/amplify-cfn-templates/function/restaurantFunction-cloudformation-template.json",
+        "Parameters": {
+          "deploymentBucketName": "amplify-bigdata-dev-145159-deployment",
+          "s3Key": "amplify-builds/restaurantFunction-6173657a3138657a634c-build.zip",
+          "env": "dev"
+        }
+      }
+    },
+    "functionreviewsFunction": {
+      "Type": "AWS::CloudFormation::Stack",
+      "Properties": {
+        "TemplateURL": "https://s3.amazonaws.com/amplify-bigdata-dev-145159-deployment/amplify-cfn-templates/function/reviewsFunction-cloudformation-template.json",
+        "Parameters": {
+          "deploymentBucketName": "amplify-bigdata-dev-145159-deployment",
+          "s3Key": "amplify-builds/reviewsFunction-4e34716273656a367a76-build.zip",
+          "env": "dev"
         }
       }
     }
